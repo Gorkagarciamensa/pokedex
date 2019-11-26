@@ -1,0 +1,14 @@
+@font-face {
+  font-family: "FlexoW01-Demi";
+  src: url("//db.onlinewebfonts.com/t/da333251c966d4ed2f0a7b7de061254f.eot");
+  src: url("//db.onlinewebfonts.com/t/da333251c966d4ed2f0a7b7de061254f.eot?#iefix")
+      format("embedded-opentype"),
+    url("//db.onlinewebfonts.com/t/da333251c966d4ed2f0a7b7de061254f.woff2")
+      format("woff2"),
+    url("//db.onlinewebfonts.com/t/da333251c966d4ed2f0a7b7de061254f.woff")
+      format("woff"),
+    url("//db.onlinewebfonts.com/t/da333251c966d4ed2f0a7b7de061254f.ttf")
+      format("truetype"),
+    url("//db.onlinewebfonts.com/t/da333251c966d4ed2f0a7b7de061254f.svg#FlexoW01-Demi")
+      format("svg");
+}
