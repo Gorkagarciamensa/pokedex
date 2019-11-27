@@ -30,6 +30,11 @@ export default {
       name: null
     };
   },
+  watch: {
+    url: function(newUrl) {
+      this.getData(newUrl);
+    }
+  },
 
   methods: {
     getData(url) {

@@ -1,7 +1,7 @@
 <template>
-  <div class="backgroundDescription">
-    <div class="marginOnly" id="show">
-      <div v-if="getDescription" class="content">
+  <div class="pokeHeight100">
+    <div class="marginOnly backgroundDescription" id="show" v-if="getDescription">
+      <div class="content">
         <!-- Si description existeix, carrega'm tot el que hi ha escrit -->
 
         <div v-if="getTypes" :urlType="getTypes"></div>
@@ -56,7 +56,7 @@
               >
                 <Evolution v-if="getPokeText.url" :evoUrl="getPokeText.url"></Evolution>
 
-                <!-- si evo_chain existeix, v-bind evoUrl amb la data de evo_chain (que s'envia a Evolution amb props) -->
+                <!-- si getPokeText existeix, v-bind evoUrl amb la data de getPokeText.url (que s'envia a Evolution amb props) -->
               </router-link>
               <div class="pokeJustify">{{ getPokeText.text }}</div>
             </div>
@@ -163,8 +163,11 @@
 
         <!-- por cada v-for, hay que hacer un div dentro de un div, sino, sale este error: Duplicate keys detected: '0', '1'...-->
       </div>
-
-      <div v-else>Loading...</div>
+    </div>
+    <div v-else class="pokemon_not_found">
+      <router-link :to="'/'">
+        <img src="http://novask.in/1124943236.png" alt class="pokedex_back" />
+      </router-link>
     </div>
   </div>
 </template>
@@ -190,13 +193,13 @@ export default {
 
   data() {
     return {
-      tab: null,
-      // description: null,
-      evo_chain: null,
-      // pokeType: null,
-      pokeText: null,
-      // pokeMt: null,
-      pokeMoves: null
+      tab: null
+      // // description: null,
+      // evo_chain: null,
+      // // pokeType: null,
+      // pokeText: null,
+      // // pokeMt: null,
+      // pokeMoves: null
     };
   },
   props: {
@@ -206,6 +209,7 @@ export default {
     pokemonName: function(newPokemonName) {
       this.actDesc(newPokemonName);
       this.actEvoChain(newPokemonName);
+
       //quan està creat (created) la pagina, el watch ens fa que al clicar a un
       //nou pokemon, aquest canvii el detall. (ex: es crea la pag. de rattata, pero
       //al clicar a la evolucio (raticate) ens canviara el detail a raticate.
@@ -229,54 +233,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["actDesc", "actEvoChain"]),
-    // getData(name) {
-    //   fetch("https://pokeapi.co/api/v2/pokemon/" + name, {
-    //     method: "GET"
-    //     //passem el name com a argument
-    //   })
-    //     .then(resp => {
-    //       console.log(resp);
-    //       if (resp.ok) {
-    //         return resp.json();
-    //       }
-    //       throw new Error("bad request");
-    //     })
-    //     .then(data => {
-    //       this.description = data;
-
-    //       this.pokeType = data.types;
-
-    //       this.pokeMt = data.moves;
-    //     })
-    //     .catch(error => {
-    //       console.log(error);
-    //     });
-    // },
-
-    getEvoChain(name) {
-      fetch("https://pokeapi.co/api/v2/pokemon-species/" + name, {
-        method: "GET"
-      })
-        .then(resp => {
-          console.log(resp);
-          if (resp.ok) {
-            return resp.json();
-          }
-          throw new Error("bad request");
-        })
-        .then(data => {
-          this.evo_chain = data.evolution_chain.url;
-          if (data.flavor_text_entries[1].language.name == "en") {
-            this.pokeText = data.flavor_text_entries[1].flavor_text;
-          } else {
-            this.pokeText = data.flavor_text_entries[2].flavor_text;
-          }
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    }
+    ...mapActions(["actDesc", "actEvoChain"])
   },
 
   created() {
@@ -305,6 +262,12 @@ export default {
   margin-bottom: 1px !important;
 }
 @media (orientation: portrait) {
+  .v-content__wrap {
+    background-color: white;
+  }
+  .pokeHeight100 {
+    height: 100%;
+  }
   .marginOnly {
     margin: 10px;
   }
@@ -439,6 +402,17 @@ export default {
   .v-slide-group__content {
     border: 1px solid grey;
     background-color: rgb(255, 255, 255, 0.9);
+  }
+  .pokemon_not_found {
+    background-image: url("https://ih1.redbubble.net/image.731955024.9007/flat,750x,075,f-pad,750x1000,f8f8f8.u1.jpg");
+    background-size: contain;
+    background-attachment: fixed;
+    height: 100%;
+  }
+  .pokedex_back {
+    position: absolute;
+    left: 168px;
+    top: 500px;
   }
 }
 @media (orientation: landscape) {

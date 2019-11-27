@@ -58,6 +58,12 @@ export default {
       // pokeEv: null
     };
   },
+  watch: {
+    evoUrl: function(newEvoUrl) {
+      this.actEvoChainUrl(newEvoUrl);
+    }
+  },
+
   computed: {
     ...mapGetters(["getEvoChain"]),
     pokeEv() {

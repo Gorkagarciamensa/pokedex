@@ -27,6 +27,9 @@ export default {
 </script>
 
 <style>
+::placeholder {
+  color: white;
+}
 .pokeSearchTerm {
   border: 2px solid rgb(227, 53, 13);
 

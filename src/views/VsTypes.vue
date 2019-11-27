@@ -1,26 +1,18 @@
 <template>
   <div>
     <div v-if="getDmg" class="pokeBackground">
-      <v-sheet class="overflow-hidden" fixed>
-        <div class="pokeTop">
+      <div class="pokeTop">
+        <v-app-bar fixed app color="#9b806f">
           <div class="pokeWidth20">
             <v-container class="fill-height">
               <v-row align="center" justify="center">
                 <div class="table">
-                  <v-btn class="pokeMenu" dark @click.stop="drawer = !drawer"
-                    >Menu</v-btn
-                  >
+                  <v-btn class="pokeMenu" dark @click.stop="drawer = !drawer">Menu</v-btn>
                 </div>
               </v-row>
             </v-container>
 
-            <v-navigation-drawer
-              v-model="drawer"
-              absolute
-              temporary
-              width="100%"
-              height="200px"
-            >
+            <v-navigation-drawer v-model="drawer" absolute temporary width="100%" height="200px">
               <v-list-item>
                 <v-list-item-avatar>
                   <v-img src="http://novask.in/1124943236.png"></v-img>
@@ -58,151 +50,110 @@
               <h3>{{ typeName }}</h3>
             </v-btn>
           </div>
-        </div>
-        <v-card-actions class="pokeMargin">
-          <div class="pokeWidth100">
-            <fieldset class="pokeBorder">
-              <legend class="pokeText">
-                <h5>Double Damage From</h5>
-              </legend>
-
-              <div class="pokeFlex">
-                <div
-                  class="pokeDoubleDmg"
-                  v-for="(type, i) in getDmg.double_damage_from"
-                  :key="i"
-                >
-                  <router-link :to="'/type/' + type.name">
-                    <v-btn class="ma-2" outlined :class="type.name">
-                      {{ type.name }}
-                    </v-btn>
-                  </router-link>
-                </div>
-              </div>
-            </fieldset>
-
-            <fieldset class="pokeBorder">
-              <legend class="pokeText">
-                <h5>Double Damage To</h5>
-              </legend>
-
-              <div class="pokeFlex">
-                <div
-                  class="pokeDoubleDmg"
-                  v-for="(type, i) in getDmg.double_damage_to"
-                  :key="i"
-                >
-                  <router-link :to="'/type/' + type.name">
-                    <v-btn class="ma-2" outlined :class="type.name">
-                      {{ type.name }}
-                    </v-btn>
-                  </router-link>
-                </div>
-              </div>
-            </fieldset>
-            <fieldset class="pokeBorder">
-              <legend class="pokeText">
-                <h5>Half Damage from</h5>
-              </legend>
-
-              <div class="pokeFlex">
-                <div
-                  class="pokeDoubleDmg"
-                  v-for="(type, i) in getDmg.half_damage_from"
-                  :key="i"
-                >
-                  <router-link :to="'/type/' + type.name">
-                    <v-btn class="ma-2" outlined :class="type.name">
-                      {{ type.name }}
-                    </v-btn>
-                  </router-link>
-                </div>
-              </div>
-            </fieldset>
-            <fieldset class="pokeBorder">
-              <legend class="pokeText">
-                <h5>Half Damage To</h5>
-              </legend>
-
-              <div class="pokeFlex">
-                <div
-                  class="pokeDoubleDmg"
-                  v-for="(type, i) in getDmg.half_damage_to"
-                  :key="i"
-                >
-                  <router-link :to="'/type/' + type.name">
-                    <v-btn class="ma-2" outlined :class="type.name">
-                      {{ type.name }}
-                    </v-btn>
-                  </router-link>
-                </div>
-              </div>
-            </fieldset>
-            <fieldset class="pokeBorder">
-              <legend class="pokeText">
-                <h5>No Damage From</h5>
-              </legend>
-
-              <div class="pokeFlex">
-                <div
-                  class="pokeDoubleDmg"
-                  v-for="(type, i) in getDmg.no_damage_from"
-                  :key="i"
-                >
-                  <router-link :to="'/type/' + type.name">
-                    <v-btn class="ma-2" outlined :class="type.name">
-                      {{ type.name }}
-                    </v-btn>
-                  </router-link>
-                </div>
-              </div>
-            </fieldset>
-            <fieldset class="pokeBorder">
-              <legend class="pokeText">
-                <h5>No Damage To</h5>
-              </legend>
-
-              <div class="pokeFlex">
-                <div
-                  class="pokeDoubleDmg"
-                  v-for="(type, i) in getDmg.no_damage_to"
-                  :key="i"
-                >
-                  <router-link :to="'/type/' + type.name">
-                    <v-btn class="ma-2" outlined :class="type.name">
-                      {{ type.name }}
-                    </v-btn>
-                  </router-link>
-                </div>
-              </div>
-            </fieldset>
-          </div>
-        </v-card-actions>
-        <div class="pokeTitle">
-          <fieldset class="pokeFieldsets">
+        </v-app-bar>
+      </div>
+      <v-card-actions class="pokeMargin">
+        <div class="pokeWidth100">
+          <fieldset class="pokeBorder">
             <legend class="pokeText">
-              <h4>MOVES</h4>
+              <h5>Double Damage From</h5>
             </legend>
-            <div class="pokeScrollBox pokeCapitalize">
-              <div class="textWhite">
-                <div v-for="(move, i) in getTypeMoves" :key="i">
-                  {{ getTypeMoves[i].name }}
-                </div>
+
+            <div class="pokeFlex">
+              <div class="pokeDoubleDmg" v-for="(type, i) in getDmg.double_damage_from" :key="i">
+                <router-link :to="'/type/' + type.name">
+                  <v-btn class="ma-2" outlined :class="type.name">{{ type.name }}</v-btn>
+                </router-link>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="pokeBorder">
+            <legend class="pokeText">
+              <h5>Double Damage To</h5>
+            </legend>
+
+            <div class="pokeFlex">
+              <div class="pokeDoubleDmg" v-for="(type, i) in getDmg.double_damage_to" :key="i">
+                <router-link :to="'/type/' + type.name">
+                  <v-btn class="ma-2" outlined :class="type.name">{{ type.name }}</v-btn>
+                </router-link>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset class="pokeBorder">
+            <legend class="pokeText">
+              <h5>Half Damage from</h5>
+            </legend>
+
+            <div class="pokeFlex">
+              <div class="pokeDoubleDmg" v-for="(type, i) in getDmg.half_damage_from" :key="i">
+                <router-link :to="'/type/' + type.name">
+                  <v-btn class="ma-2" outlined :class="type.name">{{ type.name }}</v-btn>
+                </router-link>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset class="pokeBorder">
+            <legend class="pokeText">
+              <h5>Half Damage To</h5>
+            </legend>
+
+            <div class="pokeFlex">
+              <div class="pokeDoubleDmg" v-for="(type, i) in getDmg.half_damage_to" :key="i">
+                <router-link :to="'/type/' + type.name">
+                  <v-btn class="ma-2" outlined :class="type.name">{{ type.name }}</v-btn>
+                </router-link>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset class="pokeBorder">
+            <legend class="pokeText">
+              <h5>No Damage From</h5>
+            </legend>
+
+            <div class="pokeFlex">
+              <div class="pokeDoubleDmg" v-for="(type, i) in getDmg.no_damage_from" :key="i">
+                <router-link :to="'/type/' + type.name">
+                  <v-btn class="ma-2" outlined :class="type.name">{{ type.name }}</v-btn>
+                </router-link>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset class="pokeBorder">
+            <legend class="pokeText">
+              <h5>No Damage To</h5>
+            </legend>
+
+            <div class="pokeFlex">
+              <div class="pokeDoubleDmg" v-for="(type, i) in getDmg.no_damage_to" :key="i">
+                <router-link :to="'/type/' + type.name">
+                  <v-btn class="ma-2" outlined :class="type.name">{{ type.name }}</v-btn>
+                </router-link>
               </div>
             </div>
           </fieldset>
         </div>
-        <h4 class="pokemonText">Pokemon</h4>
-        <div class="pokeTitle pokeFlex pokeWidth100 textWhite">
-          <div v-for="(pokemon, i) in pokeNormal" :key="i" class="pokeWidth30">
-            <PokemonType
-              :pokemonUrl="pokemon.pokemon.url"
-              class="alignCenter"
-            />
-            <p class="pokeCenter">{{ pokemon.pokemon.name }}</p>
+      </v-card-actions>
+      <div class="pokeTitle">
+        <fieldset class="pokeFieldsets">
+          <legend class="pokeText">
+            <h4>MOVES</h4>
+          </legend>
+          <div class="pokeScrollBox pokeCapitalize">
+            <div class="textWhite">
+              <div v-for="(move, i) in getTypeMoves" :key="i">{{ getTypeMoves[i].name }}</div>
+            </div>
           </div>
+        </fieldset>
+      </div>
+      <h4 class="pokemonText">Pokemon</h4>
+      <div class="pokeTitle pokeFlex pokeWidthAlign textWhite">
+        <div v-for="(pokemon, i) in pokeNormal" :key="i" class="pokeWidth30">
+          <PokemonType :pokemonUrl="pokemon.pokemon.url" class="alignCenter" />
+          <p class="pokeCenter">{{ pokemon.pokemon.name }}</p>
         </div>
-      </v-sheet>
+      </div>
     </div>
   </div>
 </template>
@@ -297,9 +248,6 @@ fieldset {
     background-color: rgb(227, 53, 13) !important;
     border-color: rgb(227, 53, 13);
   }
-  .pokeWidth100 {
-    width: 100%;
-  }
 
   legend {
     border: 2px solid black !important;
@@ -374,13 +322,11 @@ fieldset {
     background-color: rgb(227, 53, 13) !important;
     border-color: rgb(227, 53, 13);
     margin-left: 70px;
-    margin-top: 15px;
   }
   .pokeFlexWidth60 {
     display: flex;
     width: 100%;
     justify-content: center;
-    padding-top: 20px;
   }
   .pokeTop {
     display: flex;

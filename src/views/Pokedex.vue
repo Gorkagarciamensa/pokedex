@@ -2,26 +2,19 @@
   <div>
     <div class="background">
       <!--v-if="!loading"-->
-      <v-sheet class="overflow-hidden" fixed>
+
+      <v-app-bar fixed app color="#9b806f">
         <v-container class="fill-height">
           <v-row align="center" justify="center">
             <div class="table">
-              <v-btn color="#e3350d" dark @click.stop="drawer = !drawer"
-                >Menu</v-btn
-              >
+              <v-btn color="#e3350d" dark @click.stop="drawer = !drawer">Menu</v-btn>
 
               <searchbar @search="pokeSearching" />
             </div>
           </v-row>
         </v-container>
 
-        <v-navigation-drawer
-          v-model="drawer"
-          absolute
-          temporary
-          width="100%"
-          height="10%"
-        >
+        <v-navigation-drawer v-model="drawer" absolute temporary width="100%" height="200px">
           <v-list-item>
             <v-list-item-avatar>
               <v-img src="http://novask.in/1124943236.png"></v-img>
@@ -53,24 +46,19 @@
             </v-list-item>
           </v-list>
         </v-navigation-drawer>
-
-        <div>
-          <div class="content">
-            <v-flex d-flex flex-column align-stretch>
-              <Pokemon
-                v-for="(pokemon, index) in pokeFilter"
-                :key="index"
-                :pokeName="pokemon.name"
-              />
-            </v-flex>
-          </div>
+      </v-app-bar>
+      <div>
+        <div class="content">
+          <v-flex d-flex flex-column align-stretch>
+            <Pokemon v-for="(pokemon, index) in pokeFilter" :key="index" :pokeName="pokemon.name" />
+          </v-flex>
         </div>
+      </div>
 
-        <!-- agafa el prop pokeName de Pokemon.vue i fa v-bind per que sigui pokemon.name -->
-        <div v-if="pokeFilter.length > 0" id="loader" class="loader">
-          <div v-if="this.search.length === 0" class="pokeball"></div>
-        </div>
-      </v-sheet>
+      <!-- agafa el prop pokeName de Pokemon.vue i fa v-bind per que sigui pokemon.name -->
+      <div v-if="pokeFilter.length > 0" id="loader" class="loader">
+        <div v-if="this.search.length === 0" class="pokeball"></div>
+      </div>
     </div>
   </div>
 </template>
@@ -102,7 +90,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(["actPokemons", "actUrl"]),
+    ...mapActions(["actPokemons", "actUrl", "actAllPokemons"]),
     // getData() {
     //   this.loading = true;
     //   fetch("https://pokeapi.co/api/v2/pokemon/?offset=0&limit=20")
@@ -155,7 +143,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["getPokemons"]),
+    ...mapGetters(["getPokemons", "getAllPokemons"]),
     pokeFilter() {
       this.loading = false;
       let poke = this.getPokemons.filter(poke => {
@@ -169,6 +157,7 @@ export default {
   created() {
     if (this.getPokemons.length == 0) {
       this.actPokemons();
+      this.actAllPokemons();
     }
   },
   mounted() {
@@ -180,7 +169,7 @@ export default {
 <style>
 .content {
   width: 95%;
-  margin: 10px;
+  margin-left: 10px;
   font-family: "FlexoW01-Demi";
 }
 * {
@@ -193,14 +182,14 @@ export default {
   background-attachment: fixed;
   background-size: cover;
   height: 100%;
+  min-height: 1500px;
+}
+.v-overlay--active {
+  height: 736px;
 }
 @media (orientation: portrait) {
   body {
     background-color: #192935;
-  }
-  .v-sheet {
-    position: sticky;
-    top: 0;
   }
 
   .v-application .overflow-hidden {

@@ -5,6 +5,7 @@ Vue.use(Vuex); //tells js to use the plugin from vue (vue uses vuex as a plugin)
 
 export default new Vuex.Store({
   state: {
+    allPokemons: [],
     pokemons: [],
     pokedex: [],
     url: "",
@@ -26,6 +27,10 @@ export default new Vuex.Store({
     get_pokemons: (state, payload) => {
       console.log(payload);
       return (state.pokemons = payload);
+    },
+    get_allPokemons: (state, payload) => {
+      console.log(payload);
+      return (state.allPokemons = payload);
     },
     add_pokemons: (state, payload) => {
       return (state.pokemons = [...state.pokemons, ...payload]);
@@ -59,6 +64,23 @@ export default new Vuex.Store({
           console.log(data);
           context.commit("get_pokemons", data.results);
           context.commit("get_url", data.next);
+        });
+    },
+    actAllPokemons(context) {
+      fetch("https://pokeapi.co/api/v2/pokemon/?offset=0&limit=807")
+        .then(resp => {
+          console.log(resp);
+          if (resp.ok) {
+            return resp.json();
+          }
+          throw new Error("bad request");
+        })
+        .then(data => {
+          console.log(data);
+          context.commit("get_allPokemons", data.results);
+        })
+        .catch(error => {
+          console.log(error);
         });
     },
     //description
@@ -158,6 +180,7 @@ export default new Vuex.Store({
 
   getters: {
     //pokedex
+    getAllPokemons: state => state.allPokemons,
     getPokemons: state => state.pokemons, //es crida a created
     //description
     getDescription: state => state.description,
