@@ -90,31 +90,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(["actPokemons", "actUrl", "actAllPokemons"]),
-    // getData() {
-    //   this.loading = true;
-    //   fetch("https://pokeapi.co/api/v2/pokemon/?offset=0&limit=20")
-    //     .then(res => res.json())
-    //     .then(data => {
-    //       this.pokeDex = data.results;
-    //       this.nextUrl = data.next;
-    //       this.loading = false;
-    //     });
-    // },
-    // getUrl(url) {
-    //   console.log("next");
-    //   console.log(url);
-    //   if (url) {
-    //     fetch(url)
-    //       .then(res => res.json())
-    //       .then(data => {
-    //         this.pokeDex = [...this.pokeDex, ...data.results];
-    //         //els ... deconstrueixen l'array per cada un dels objectes que estan dins
-    //         //i com que esta dins d'una array, els converteix tots en una array
-    //         this.nextUrl = data.next;
-    //       });
-    //   }
-    // },
+    ...mapActions(["actPokemons", "actUrl"]),
 
     pokeSearching(dex) {
       this.search = dex;
@@ -143,7 +119,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["getPokemons", "getAllPokemons"]),
+    ...mapGetters(["getPokemons"]),
     pokeFilter() {
       this.loading = false;
       let poke = this.getPokemons.filter(poke => {
@@ -157,7 +133,6 @@ export default {
   created() {
     if (this.getPokemons.length == 0) {
       this.actPokemons();
-      this.actAllPokemons();
     }
   },
   mounted() {
@@ -171,6 +146,7 @@ export default {
   width: 95%;
   margin-left: 10px;
   font-family: "FlexoW01-Demi";
+  padding-top: 10px;
 }
 * {
   -webkit-box-sizing: border-box;

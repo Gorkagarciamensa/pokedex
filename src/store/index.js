@@ -5,13 +5,12 @@ Vue.use(Vuex); //tells js to use the plugin from vue (vue uses vuex as a plugin)
 
 export default new Vuex.Store({
   state: {
-    allPokemons: [],
     pokemons: [],
     pokedex: [],
     url: "",
     description: null, //desc. of 1 pokemon
-    types: [], //all types
-    moves: [], //moves for 1 pokemon
+    types: null, //all types
+    moves: null, //moves for 1 pokemon
 
     evoChain: null,
     pokeText: [],
@@ -28,10 +27,7 @@ export default new Vuex.Store({
       console.log(payload);
       return (state.pokemons = payload);
     },
-    get_allPokemons: (state, payload) => {
-      console.log(payload);
-      return (state.allPokemons = payload);
-    },
+
     add_pokemons: (state, payload) => {
       return (state.pokemons = [...state.pokemons, ...payload]);
     },
@@ -66,46 +62,39 @@ export default new Vuex.Store({
           context.commit("get_url", data.next);
         });
     },
-    actAllPokemons(context) {
-      fetch("https://pokeapi.co/api/v2/pokemon/?offset=0&limit=807")
-        .then(resp => {
-          console.log(resp);
-          if (resp.ok) {
-            return resp.json();
-          }
-          throw new Error("bad request");
-        })
-        .then(data => {
-          console.log(data);
-          context.commit("get_allPokemons", data.results);
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    },
+
     //description
     actDesc(context, name) {
-      fetch("https://pokeapi.co/api/v2/pokemon/" + name, {
-        method: "GET"
-        //passem el name com a argument
-      })
-        .then(resp => {
-          console.log(resp);
-          if (resp.ok) {
-            return resp.json();
-          }
-          throw new Error("bad request");
+      if (name) {
+        fetch("https://pokeapi.co/api/v2/pokemon/" + name, {
+          method: "GET"
+          //passem el name com a argument
         })
-        .then(data => {
-          context.commit("get_desc", data);
+          .then(resp => {
+            console.log(resp);
+            if (resp.ok) {
+              return resp.json();
+            }
+            throw new Error("bad request");
+          })
+          .then(data => {
+            context.commit("get_desc", data);
 
-          context.commit("get_type", data.types);
+            context.commit("get_type", data.types);
 
-          context.commit("get_moves", data.moves);
-        })
-        .catch(error => {
-          console.log(error);
-        });
+            context.commit("get_moves", data.moves);
+            console.log(data.moves);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      } else {
+        context.commit("get_desc", null);
+
+        context.commit("get_type", null);
+
+        context.commit("get_moves", null);
+      }
     },
 
     actEvoChain(context, name) {
@@ -180,7 +169,7 @@ export default new Vuex.Store({
 
   getters: {
     //pokedex
-    getAllPokemons: state => state.allPokemons,
+
     getPokemons: state => state.pokemons, //es crida a created
     //description
     getDescription: state => state.description,

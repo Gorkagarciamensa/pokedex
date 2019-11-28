@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="flexInput">
     <input
       type="text"
       v-model="search"
@@ -7,6 +7,9 @@
       class="pokeSearchTerm"
       placeholder="Search a Pokemon"
     />
+    <router-link v-if="this.search.length > 0" :to="'/description/' + this.search">
+      <button class="pokeButton">Go!</button>
+    </router-link>
   </div>
 </template>
 
@@ -17,16 +20,22 @@ export default {
       search: ""
     };
   },
+
   methods: {
     pokeFiltering() {
       this.$emit("search", this.search);
-      console.log("hello world" + this.search);
+      console.log(this.search);
     }
   }
 };
 </script>
 
 <style>
+.flexInput {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+}
 ::placeholder {
   color: white;
 }
@@ -41,5 +50,16 @@ export default {
 }
 .pokeSearchTerm:focus {
   color: white;
+}
+.pokeButton {
+  background-color: #e3350d;
+  border: 2px solid black;
+  border-radius: 10px;
+  color: white;
+  padding: 0px 10px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  margin-top: -1px;
 }
 </style>

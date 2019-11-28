@@ -19,7 +19,7 @@
                     <div>
                       <h3
                         class="flexName pokeAlign pokeWidth100 pokeFlexLand"
-                      >{{ pokeId }} - {{ pokemonName }}</h3>
+                      >{{ pokeId }} - {{ getDescription.name }}</h3>
                     </div>
                     <div class="flexDesc">
                       <div
@@ -95,16 +95,10 @@
               <v-tabs-items v-model="tab">
                 <v-tab-item>
                   <div>
-                    <div v-for="(mov, i) in getMoves" :key="i">
-                      <div
-                        v-if="
-                        getMoves[i].version_group_details[0].move_learn_method
-                          .name == 'level-up'
-                      "
-                        class="tableStyle"
-                      >
-                        <p class="pokeParagraph">{{ getMoves[i].move.name }}</p>
-                        <!-- {{ getMoves[i].version_group_details[0].level_learned_at }} -->
+                    <div v-for="(mov, i) in levelUpMoves" :key="i">
+                      <div class="tableStyle">
+                        <p class="pokeParagraph">{{ mov.move.name }} -</p>
+                        <p>{{mov.version_group_details[0].level_learned_at}}</p>
                       </div>
                     </div>
                   </div>
@@ -112,15 +106,9 @@
 
                 <v-tab-item>
                   <div>
-                    <div v-for="(mov, i) in getMoves" :key="i">
-                      <div
-                        v-if="
-                        getMoves[i].version_group_details[0].move_learn_method
-                          .name == 'machine'
-                      "
-                        class="tableStyle"
-                      >
-                        <p class="pokeParagraph">{{ getMoves[i].move.name }}</p>
+                    <div v-for="(mov, i) in mtMoves" :key="i">
+                      <div class="tableStyle">
+                        <p class="pokeParagraph">{{ mov.move.name }}</p>
                       </div>
                     </div>
                   </div>
@@ -128,30 +116,18 @@
 
                 <v-tab-item>
                   <div>
-                    <div v-for="(mov, i) in getMoves" :key="i">
-                      <div
-                        v-if="
-                        getMoves[i].version_group_details[0].move_learn_method
-                          .name == 'tutor'
-                      "
-                        class="tableStyle"
-                      >
-                        <p class="pokeParagraph">{{ getMoves[i].move.name }}</p>
+                    <div v-for="(mov, i) in tutorMoves" :key="i">
+                      <div class="tableStyle">
+                        <p class="pokeParagraph">{{ mov.move.name }}</p>
                       </div>
                     </div>
                   </div>
                 </v-tab-item>
                 <v-tab-item>
                   <div>
-                    <div v-for="(mov, i) in getMoves" :key="i">
-                      <div
-                        v-if="
-                        getMoves[i].version_group_details[0].move_learn_method
-                          .name == 'egg'
-                      "
-                        class="tableStyle"
-                      >
-                        <p class="pokeParagraph">{{ getMoves[i].move.name }}</p>
+                    <div v-for="(mov, i) in eggMoves" :key="i">
+                      <div class="tableStyle">
+                        <p class="pokeParagraph">{{ mov.move.name }}</p>
                       </div>
                     </div>
                   </div>
@@ -194,12 +170,6 @@ export default {
   data() {
     return {
       tab: null
-      // // description: null,
-      // evo_chain: null,
-      // // pokeType: null,
-      // pokeText: null,
-      // // pokeMt: null,
-      // pokeMoves: null
     };
   },
   props: {
@@ -230,6 +200,37 @@ export default {
       }
 
       return id;
+    },
+    levelUpMoves() {
+      return this.getMoves
+        .filter(move => {
+          return (
+            move.version_group_details[0].move_learn_method.name == "level-up"
+          );
+        })
+        .sort((a, b) => {
+          return (
+            a.version_group_details[0].level_learned_at -
+            b.version_group_details[0].level_learned_at
+          );
+        });
+    },
+    mtMoves() {
+      return this.getMoves.filter(move => {
+        return (
+          move.version_group_details[0].move_learn_method.name == "machine"
+        );
+      });
+    },
+    tutorMoves() {
+      return this.getMoves.filter(move => {
+        return move.version_group_details[0].move_learn_method.name == "tutor";
+      });
+    },
+    eggMoves() {
+      return this.getMoves.filter(move => {
+        return move.version_group_details[0].move_learn_method.name == "egg";
+      });
     }
   },
   methods: {
@@ -242,6 +243,11 @@ export default {
     // this.getEvoChain(this.pokemonName);
     this.actDesc(this.pokemonName);
     this.actEvoChain(this.pokemonName);
+  },
+  beforeDestroy() {
+    console.log("destroyed");
+    this.actDesc(null);
+    this.actEvoChain(null);
   }
 };
 </script>
@@ -500,6 +506,23 @@ export default {
   .pokeCapitalize {
     padding-top: 10px;
     text-transform: capitalize;
+  }
+  .pokeHeight100 {
+    height: 100%;
+  }
+  .pokemon_not_found {
+    background-color: white;
+    background-image: url("../assets/luxio404.jpg");
+    background-size: contain;
+    background-attachment: fixed;
+    height: 100%;
+  }
+  .pokedex_back {
+    position: absolute;
+    left: 450px;
+    top: 100px;
+    width: 200px;
+    height: 200px;
   }
 }
 </style>
