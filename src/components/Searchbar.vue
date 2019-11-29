@@ -7,7 +7,7 @@
       class="pokeSearchTerm"
       placeholder="Search a Pokemon"
     />
-    <router-link v-if="this.search.length > 0" :to="'/description/' + this.search">
+    <router-link v-if="this.search.length > 0" :to="'/description/' + this.search.toLowerCase()">
       <button class="pokeButton">Go!</button>
     </router-link>
   </div>
